@@ -1,0 +1,4 @@
+#!/bin/sh
+# Borrowed from https://github.com/mmstick/cargo-deb/issues/100#issuecomment-512253134
+
+deb-systemd-invoke stop my-service

@@ -1,0 +1,8 @@
+[Unit]
+Description=HTTP server that responds with random bytes encoded with base64
+After=network.target network-online.target systemd-networkd.service NetworkManager.service connman.service
+
+[Service]
+ExecStart=/usr/bin/randrust 80
+Restart=always
+RestartSec=0

@@ -11,3 +11,10 @@ hyper = "0.12.35"
 futures = "0.1.29"
 rand = "0.7.2"
 base64 = "0.10.1"
+
+
+[package.metadata.deb]
+maintainer-scripts="debian"
+assets = [
+    ["debian/randrust.service", "/lib/systemd/system/randrust.service", "644"]
+]
