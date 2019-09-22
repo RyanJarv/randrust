@@ -12,7 +12,7 @@ matrix:
 cache: cargo
 
 script:
-  - "./scripts/build_all.sh"
+  - "./scripts/build_ci.sh"
 
 before_deploy:
   - "./scripts/package_deb.sh"

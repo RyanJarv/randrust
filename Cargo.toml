@@ -1,6 +1,6 @@
 [package]
 name = "randrust"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Ryan Gerstenkorn <ryan_gerstenkorn@fastmail.fm>"]
 edition = "2018"
 description = "Lite HTTP server that returns base64 encoded bytes of a given length"
