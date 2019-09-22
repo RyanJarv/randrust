@@ -21,6 +21,7 @@ deploy:
     local-dir: target/debian
     on:
       branch: master
+      rust: stable
     repository: test
     username: jarv
     token:
@@ -29,5 +30,6 @@ deploy:
   - provider: cargo
     on:
       branch: master
+      rust: stable
     token:
       secure: Gj3LmpXfUkfj1CZ4Z6vDrVX/b60D9iowaiquWEP+CzxAJp4Y5h6ZIO+gxBMBgz9Nsm9zlK6pC0ki5C/OWiWAEztlP6d8kKZa3J4kIzggd5BOHdQ/TAiAlHeotC754F6Sz8CrylBtpAgOnMiLVgUoLCgPVPiCEvhiaJm7/Gt7d2WECvkhz/p0hH9Jwc9d5zY4kGCeYUDGKv1EkgkO/mh2A8BTvp5p+klnIc+hCmgZsmMZ04NwHOnkhGM2s8CH4S4a29ADZUK9q/9lAeoQogSvxWx6qFaka67vnVY6zgHz2YM91GBx8DNNaPDajhymqGhN1RWMw9Xv5gkJ7pjS8m6slsAR6vV/FfJFXxug1Ktl+2PTgwehp7JaaMuGeNGm5enFLRvFZ0wv+lCl/fNRfUmH3uHV0SD3zjIBqKMLjjuhG3egJYvQhoz0l2pixR5wocKOcF7GTusJj73q6bI5mCDh9zcfATWqfo5rgc9y4bAt9Ao6nM1Fz/7GFmh4yxB9lkpciqMlxpQNWxBrG7XiXmsM9tdsKVgVUrwmDI44fiQWo0B2cTNpH4Vw4mPfiDh+jPtYh8DGeWEDzEz872EiI2jQJ9c01pMz/Wwnr5kg8TsX1XFk72db04kx06tJgbMPmjbOxV7c5ky1TE+bvlhjEiL02zMGMpwvBLF68/mKts8M0ts=
