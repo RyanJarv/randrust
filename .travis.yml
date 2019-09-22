@@ -13,23 +13,24 @@ cache: cargo
 
 script:
   - "./scripts/build_all.sh"
+
+before_deploy:
   - "./scripts/package_deb.sh"
 
 deploy:
-  - provider: packagecloud
-    skip_cleanup: true
-    local-dir: target/debian
-    on:
-      branch: master
-      rust: stable
-    repository: test
-    username: jarv
-    token:
-      secure: RXLM+GqungblYmXbPN6/eeDeerzYJDVeVmXGxza2Xx/X7GO8OieMbX6PKUMORsO5DKaYnWw9aMyjK+tCWI9HDK5/PkciAVnLpgTxf4lAjVD63R8xsTDcM78tI08agvpMv/ymklUEfadVudb2GCaKUx1/yNzXaWWW05IJNEmms5laSnImGkjaFJHN6DFwoCDXDzORASWCTSfNYG7J3bQsNU0FOeISP24i0RZSAA0x4Jz159NMvXo+75kz2PB27QK4IRMhdT8rg/SOST59TwSPVkwhI6E3ORuSgqD1IFiVjulE73Nq6S/HRXQTGL3DKZhPXcp9uzK9M/B6GQk6O0ARpEypGcetihftoiK+k+n+j1HVk74KbNYf84paqCbXdMuLEnFKFK8hGuuheZsA8Tw7gP2xZmZ3OxAy8aolaeQmArLaKrv5JYnTL8zDEZX1Kv28aZoQPe8kb+h8t5DhGJkUP8dLUaeBWgqE0TctbHRsBLbCBTBLDHtLUDOdWvbt+sWF6zDpX+PoXp8Wn7XgD4tAah5EqF4311rnsQF6DZ0AKTBBmsvWIeoFO24Fi6UM1J0f7l6cHGxoUQqRslfiHS3fGuq3k/7upghGW+JUmHkJi3uUKdNeU54srAuIaCQwv2LFsqUsCJL7jitGm+F/eJmZMK08bcjTi6+lTupYY7cMmhc=
-    dist: ubuntu/disco
   - provider: cargo
-    on:
-      branch: master
-      rust: stable
     token:
       secure: Gj3LmpXfUkfj1CZ4Z6vDrVX/b60D9iowaiquWEP+CzxAJp4Y5h6ZIO+gxBMBgz9Nsm9zlK6pC0ki5C/OWiWAEztlP6d8kKZa3J4kIzggd5BOHdQ/TAiAlHeotC754F6Sz8CrylBtpAgOnMiLVgUoLCgPVPiCEvhiaJm7/Gt7d2WECvkhz/p0hH9Jwc9d5zY4kGCeYUDGKv1EkgkO/mh2A8BTvp5p+klnIc+hCmgZsmMZ04NwHOnkhGM2s8CH4S4a29ADZUK9q/9lAeoQogSvxWx6qFaka67vnVY6zgHz2YM91GBx8DNNaPDajhymqGhN1RWMw9Xv5gkJ7pjS8m6slsAR6vV/FfJFXxug1Ktl+2PTgwehp7JaaMuGeNGm5enFLRvFZ0wv+lCl/fNRfUmH3uHV0SD3zjIBqKMLjjuhG3egJYvQhoz0l2pixR5wocKOcF7GTusJj73q6bI5mCDh9zcfATWqfo5rgc9y4bAt9Ao6nM1Fz/7GFmh4yxB9lkpciqMlxpQNWxBrG7XiXmsM9tdsKVgVUrwmDI44fiQWo0B2cTNpH4Vw4mPfiDh+jPtYh8DGeWEDzEz872EiI2jQJ9c01pMz/Wwnr5kg8TsX1XFk72db04kx06tJgbMPmjbOxV7c5ky1TE+bvlhjEiL02zMGMpwvBLF68/mKts8M0ts=
+    on:
+      branch: master
+      rust: stable
+  - provider: packagecloud
+    local-dir: target/debian
+    repository: test
+    username: jarv
+    dist: ubuntu/disco
+    token:
+      secure: RXLM+GqungblYmXbPN6/eeDeerzYJDVeVmXGxza2Xx/X7GO8OieMbX6PKUMORsO5DKaYnWw9aMyjK+tCWI9HDK5/PkciAVnLpgTxf4lAjVD63R8xsTDcM78tI08agvpMv/ymklUEfadVudb2GCaKUx1/yNzXaWWW05IJNEmms5laSnImGkjaFJHN6DFwoCDXDzORASWCTSfNYG7J3bQsNU0FOeISP24i0RZSAA0x4Jz159NMvXo+75kz2PB27QK4IRMhdT8rg/SOST59TwSPVkwhI6E3ORuSgqD1IFiVjulE73Nq6S/HRXQTGL3DKZhPXcp9uzK9M/B6GQk6O0ARpEypGcetihftoiK+k+n+j1HVk74KbNYf84paqCbXdMuLEnFKFK8hGuuheZsA8Tw7gP2xZmZ3OxAy8aolaeQmArLaKrv5JYnTL8zDEZX1Kv28aZoQPe8kb+h8t5DhGJkUP8dLUaeBWgqE0TctbHRsBLbCBTBLDHtLUDOdWvbt+sWF6zDpX+PoXp8Wn7XgD4tAah5EqF4311rnsQF6DZ0AKTBBmsvWIeoFO24Fi6UM1J0f7l6cHGxoUQqRslfiHS3fGuq3k/7upghGW+JUmHkJi3uUKdNeU54srAuIaCQwv2LFsqUsCJL7jitGm+F/eJmZMK08bcjTi6+lTupYY7cMmhc=
+    on:
+      branch: master
+      rust: stable
