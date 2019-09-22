@@ -16,5 +16,5 @@ base64 = "0.10.1"
 [package.metadata.deb]
 maintainer-scripts="debian"
 assets = [
-    ["debian/randrust.service", "/lib/systemd/system/randrust.service", "644"]
-]
+            ["debian/randrust.service", "/lib/systemd/system/randrust.service", "644"]
+         ]
