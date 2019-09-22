@@ -24,6 +24,7 @@ deploy:
     on:
       branch: master
       rust: stable
+      tags: true
   - provider: packagecloud
     local-dir: target/debian
     repository: test
@@ -34,3 +35,4 @@ deploy:
     on:
       branch: master
       rust: stable
+      tags: true
