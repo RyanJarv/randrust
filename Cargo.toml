@@ -1,8 +1,10 @@
 [package]
 name = "randrust"
-version = "0.1.0"
+version = "0.1.4"
 authors = ["Ryan Gerstenkorn <ryan_gerstenkorn@fastmail.fm>"]
 edition = "2018"
+description = "Lite HTTP server that returns base64 encoded bytes of a given length"
+license = "Apache-2.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -16,5 +18,5 @@ base64 = "0.10.1"
 [package.metadata.deb]
 maintainer-scripts="debian"
 assets = [
-    ["debian/randrust.service", "/lib/systemd/system/randrust.service", "644"]
-]
+            ["debian/randrust.service", "/lib/systemd/system/randrust.service", "644"]
+         ]
