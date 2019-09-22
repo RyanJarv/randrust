@@ -17,6 +17,7 @@ script:
 
 deploy:
   - provider: packagecloud
+    skip_cleanup: true
     local-dir: target/debian
     on:
       branch: master
