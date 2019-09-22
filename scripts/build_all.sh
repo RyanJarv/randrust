@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 set -evuo pipefail
 
-cargo build --verbose --all --release
-cargo test --verbose --all --release
+cargo build --verbose --all --release --frozen --offline
+cargo test --verbose --all --release --frozen --offline
