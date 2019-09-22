@@ -26,6 +26,7 @@ deploy:
       rust: stable
       tags: true
   - provider: packagecloud
+    skip_cleanup: true
     local-dir: target/debian
     repository: test
     username: jarv

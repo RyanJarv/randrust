@@ -8,9 +8,10 @@ OS="$(uname)"
 
 CMD="
 set -evu
-cargo install cargo-deb||:
+cargo deb --version || cargo install cargo-deb
 cargo deb --no-build
 "
+
 
 # Linux is required so use docker if we aren't already using that
 if [[ $OS == "Linux" ]]; then
