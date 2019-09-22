@@ -1,6 +1,6 @@
 [package]
 name = "randrust"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Ryan Gerstenkorn <ryan_gerstenkorn@fastmail.fm>"]
 edition = "2018"
 
