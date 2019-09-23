@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'randrust' do
   let(:facts) { { is_virtual: false } }
-  let(:params) { { } }
+  let(:params) { {} }
 
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do

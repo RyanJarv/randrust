@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
+#
 # To check the correct dependancies are set up for randrust.
+#
 
 require 'spec_helper'
 describe 'randrust' do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'randrust::install' do
@@ -7,7 +9,7 @@ describe 'randrust::install' do
       let(:params) { { package_ensure: 'present', package_name: ['randrust'], package_manage: true } }
 
       it { is_expected.to compile }
-      #it { is_expected.to compile.with_all_deps }
+      it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_package('randrust').with_ensure('present') }
 
       context 'with package_ensure => latest' do
