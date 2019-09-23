@@ -1,0 +1,10 @@
+# randrust: Managed by puppet.
+#
+
+LISTEN_PORT=<%= $randrust::config::listen_port %>
+<% if $randrust::config::interface { -%>
+INTERFACE=<%= $randrust::config::interface %>
+<% } else { %>
+INTERFACE=0.0.0.0
+<% } %>
+
