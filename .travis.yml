@@ -12,7 +12,7 @@ matrix:
 cache: cargo
 
 install:
-  - cargo install cargo-deb
+  - cargo deb --version || cargo install cargo-deb
 
 script:
   - "./scripts/build_ci.sh"
