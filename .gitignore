@@ -2,3 +2,9 @@ Gemfile.lock
 /target
 **/*.rs.bk
 helm/*.tgz
+.venv
+.vagrant
+.vscode
+pkg
+bin
+spec/fixtures

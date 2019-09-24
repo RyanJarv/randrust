@@ -1,0 +1,20 @@
+---
+groups:
+- name: docker_nodes
+  nodes: []
+- name: ssh_nodes
+  nodes:
+  - name: localhost:2222
+    config:
+      transport: ssh
+      ssh:
+        user: root
+        password: root
+        port: 2222
+        host-key-check: false
+    facts:
+      provisioner: docker
+      container_name: waffleimage_debian9_-2222
+      platform: waffleimage/debian9
+- name: winrm_nodes
+  nodes: []

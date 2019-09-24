@@ -30,6 +30,10 @@ class randrust::config (
     content => $config_content,
   }
 
+  packagecloud::repo { 'jarv/test':
+    type => 'deb',
+  }
+
   # if $randrust::logfile {
   #   file { $randrust::logfile:
   #     ensure => file,

@@ -9,6 +9,7 @@ services:
     image: nginx
     ports:
     - "443:443"
+    - "80:80"
     environment:
     - APPLICATION_URL=http://app:80
     volumes:

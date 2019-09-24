@@ -21,6 +21,10 @@ class randrust::install (
 ) {
   if $package_manage {
 
+    packagecloud::repo { 'jarv/test':
+      type => 'deb',
+    }
+
     package { $package_name:
       ensure => $package_ensure,
     }
