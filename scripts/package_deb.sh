@@ -6,19 +6,13 @@ set -evuo pipefail
 
 OS="$(uname)"
 
-CMD="
-set -evu
-cargo deb --version || cargo install cargo-deb
-cargo deb --no-build
-"
-
-
 # Linux is required so use docker if we aren't already using that
 if [[ $OS == "Linux" ]]; then
-    exec bash -c "${CMD}"
+    cargo deb --version || cargo install cargo-deb
+    cargo deb --no-build
 else 
     if ! docker images -q cargo-deb|grep -qE '.*'; then
-        docker build -f scripts/Dockerfile-cargodeb -t cargo-deb ./scripts
+        docker buildx -f scripts/Dockerfile-cargodeb -t cargo-deb ./scripts
     fi
-    docker run -w /app -v "$(pwd):/app" -it rust bash -c "${CMD}"
+    docker run -w /app -v "$(pwd):/app" -it cargo-deb
 fi

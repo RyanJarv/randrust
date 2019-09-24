@@ -1,0 +1,2 @@
+/etc/apparmor.d/usr.local.bin.randrust
+/etc/default/randrust

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+disable_profile() {
+    APP_CONFFILE="/etc/apparmor.d/usr.local.bin.randrust"
+    APP_DISABLE="/etc/apparmor.d/disable/usr.local.bin.randrust"
+    # Create a symlink to the yet-to-be-unpacked profile
+    if [ ! -e "$APP_CONFFILE" ]; then
+        mkdir -p `dirname $APP_DISABLE` 2>/dev/null || true
+        ln -sf $APP_CONFFILE $APP_DISABLE
+    fi
+}
+
+if [ "$1" = "install" ]; then
+    # Disable AppArmor profile on install
+    disable_profile
+fi

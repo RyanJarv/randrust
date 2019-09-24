@@ -1,0 +1,10 @@
+# Stop the socket on remove so randrust is not restarted via socket activation
+if [ -d /run/systemd/system ] && [ "$1" = remove ] ; then
+	systemctl stop randrust.socket || true
+fi
+
+# Automatically added by dh_installinit/11.1.6ubuntu1
+if [ -x "/etc/init.d/randrust" ] && [ "$1" = remove ]; then
+	invoke-rc.d randrust stop || exit 1
+fi
+# End automatically added section

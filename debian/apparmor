@@ -1,0 +1,15 @@
+# Last Modified: Wed Sep 25 13:33:00 2019
+#include <tunables/global>
+
+/usr/local/bin/randrust {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+
+  unix (receive) type=stream,
+
+  # randrust configuration
+  /{,var/}run/randrust.pid{,.tmp} rwk,
+
+  # Site-specific additions and overrides. See local/README for details.
+  #include <local/usr.local.bin.randrust>
+}

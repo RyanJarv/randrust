@@ -1,6 +1,6 @@
 [package]
 name = "randrust"
-version = "0.1.4"
+version = "0.1.13"
 authors = ["Ryan Gerstenkorn <ryan_gerstenkorn@fastmail.fm>"]
 edition = "2018"
 description = "Lite HTTP server that returns base64 encoded bytes of a given length"
@@ -16,7 +16,13 @@ base64 = "0.10.1"
 
 
 [package.metadata.deb]
-maintainer-scripts="debian"
+section = "httpd"
+depends = "libgcc1 (>= 1:4.0.0), libc6 (>= 2.00)"
+maintainer-scripts="debian/control"
+conf-files = ["/etc/default/randrust"]
 assets = [
-            ["debian/randrust.service", "/lib/systemd/system/randrust.service", "644"]
+            ["target/release/randrust", "usr/local/bin/randrust", "755"],
+            ["debian/init.d", "etc/init.d/randrust", "755"],
+            ["debian/default", "etc/default/randrust", "644"],
+            ["debian/apparmor", "etc/apparmor.d/usr.local.bin.randrust", "644"]
          ]
