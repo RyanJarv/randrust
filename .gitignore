@@ -2,4 +2,3 @@ Gemfile.lock
 /target
 **/*.rs.bk
 helm/*.tgz
-helm/randrust/charts/
