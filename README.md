@@ -84,4 +84,4 @@ In the Development section, tell other users the ground rules for contributing t
 
 ## Release Notes/Contributors/Etc. **Optional**
 
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+Icon (https://htmlpreview.github.io/?https://github.com/RyanJarv/randrust/blob/master/helm/randrust/icon.svg) created by ibrandify (https://thenounproject.com/ibrandify/) and licensed under CCPL.

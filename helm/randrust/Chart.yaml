@@ -1,5 +1,10 @@
 apiVersion: v1
-appVersion: "0.1.0"
+appVersion: "0.1.1"
 description: A Helm chart for Kubernetes
 name: randrust
-version: 0.1.1
+version: 0.1.2
+home: https://github.com/RyanJarv/randrust
+icon: https://htmlpreview.github.io/?https://github.com/RyanJarv/randrust/blob/master/helm/randrust/icon.svg
+maintainers:
+  - name: ryanjarv
+    email: ryan_gerstenkorn@fastmail.fm
