@@ -1,0 +1,64 @@
+jobs:
+  delete-helm-release:
+    executor: aws-eks/python
+    parameters:
+      cluster-name:
+        description: Cluster name
+        type: string
+    steps:
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+      - helm/delete-helm-release:
+          purge: true
+          release-name: randrust-release
+          timeout: 600
+  install-helm-chart:
+    executor: aws-eks/python
+    parameters:
+      cluster-name:
+        description: Cluster name
+        type: string
+    steps:
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+      - helm/install-helm-chart:
+          chart: ./helm/randrust
+          release-name: randrust-release
+  install-helm-on-cluster:
+    executor: aws-eks/python
+    parameters:
+      cluster-name:
+        description: Cluster name
+        type: string
+    steps:
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+          install-kubectl: true
+      - helm/install-helm-on-cluster:
+          enable-cluster-wide-admin-access: true
+orbs:
+  aws-eks: circleci/aws-eks@0.2.1
+  helm: circleci/helm@0.1.1
+version: 2.1
+workflows:
+  deployment:
+    jobs:
+      - aws-eks/create-cluster:
+          cluster-name: test-cluster
+      - install-helm-on-cluster:
+          cluster-name: test-cluster
+          requires:
+            - aws-eks/create-cluster
+      - install-helm-chart:
+          cluster-name: test-cluster
+          requires:
+            - install-helm-on-cluster
+      - delete-helm-release:
+          cluster-name: test-cluster
+          requires:
+            - install-helm-chart
+      - aws-eks/delete-cluster:
+          cluster-name: test-cluster
+          requires:
+            - delete-helm-release
+          wait: true
