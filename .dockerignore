@@ -1,3 +1,5 @@
 /scripts
 /target
 **/*.rs.bk
+.git
+bin

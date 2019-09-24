@@ -34,12 +34,18 @@ fn router(req: Request<Body>) -> BoxFut {
     let parts: Vec<_> = req.uri().path().split("/").collect();
 
     match (req.method(), parts[1]) {
+        (&Method::GET, "status") => {
+            // TODO: add additional checking
+            *response.body_mut() = Body::from("OK");
+            *response.status_mut() = StatusCode::OK;
+        }
         (&Method::GET, "key") => {
             let resp = match parts[2].parse() {
                 Ok(n) => rand_base64_data(n),
                 Err(e) => panic!(e), // TODO: don't panic
             };
             *response.body_mut() = Body::from(resp);
+            *response.status_mut() = StatusCode::OK;
         }
         _ => {
             *response.body_mut() = Body::from("Please use the `/key/<length>` endpoint\n");
