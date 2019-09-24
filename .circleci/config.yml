@@ -23,24 +23,9 @@ jobs:
             git remote add k8s https://github.com/helm/charts
             git fetch k8s master
             ct lint --config test/ct.yaml
-  sync:
-    docker:
-      - image: google/cloud-sdk
-    steps:
-      - checkout
-      - run:
-          name: sync
-          command: test/repo-sync.sh
 workflows:
   version: 2
   lint:
     jobs:
       - lint-scripts
       - lint-charts
-  sync:
-    jobs:
-      - sync:
-          filters:
-            branches:
-              only:
-                - master
