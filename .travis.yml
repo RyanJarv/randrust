@@ -19,7 +19,7 @@ install:
 
 script:
   - "./scripts/sh_lint.sh"
-  - "./scripts/build_ci.sh"
+  - "./scripts/build.sh"
   - "./scripts/helm_lint.sh"
 
 before_deploy:
