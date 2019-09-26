@@ -1,8 +1,7 @@
-remote: k8s
-target-branch: master
 chart-dirs:
   - helm
 excluded-charts:
   - common
 all: true
 helm-extra-args: --timeout 600
+lint-conf: .lintconf.yaml
