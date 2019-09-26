@@ -5,6 +5,9 @@ rust:
   - beta
   - nightly
 
+services:
+  - docker
+
 matrix:
   allow_failures:
     - rust: nightly
@@ -15,7 +18,9 @@ install:
   - cargo deb --version || cargo install cargo-deb
 
 script:
+  - "./scripts/sh_lint.sh"
   - "./scripts/build_ci.sh"
+  - "./scripts/helm_lint.sh"
 
 before_deploy:
   - "./scripts/package_deb.sh"

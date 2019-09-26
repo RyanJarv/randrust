@@ -23,7 +23,7 @@ ingress:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
   hosts:
-    - host: chart-testing-worker
+    - host: kubernetes.docker.internal
       paths: ["/"]
 
   tls:

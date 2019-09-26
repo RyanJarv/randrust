@@ -2,30 +2,28 @@ version: 2
 jobs:
   lint-scripts:
     docker:
-      - image: koalaman/shellcheck-alpine
+    - image: koalaman/shellcheck-alpine
     steps:
-      - checkout
-      - run:
-          name: lint
-          command: |
-            shellcheck -x test/build.sh
-            shellcheck -x test/e2e.sh
-            shellcheck -x test/helm-test-e2e.sh
-            shellcheck -x test/repo-sync.sh
+    - checkout
+    - run:
+        name: lint
+        command: |
+          shellcheck -x scripts/helm_lint.sh
+          shellcheck -x scripts/helm_deploy.sh 
   lint-charts:
     docker:
-      - image: gcr.io/kubernetes-charts-ci/test-image:v3.3.2
+    - image: gcr.io/kubernetes-charts-ci/test-image:v3.3.2
     steps:
-      - checkout
-      - run:
-          name: lint
-          command: |
-            git remote add k8s https://github.com/helm/charts
-            git fetch k8s master
-            ct lint --config test/ct.yaml
+    - checkout
+    - run:
+        name: lint
+        command: |
+          git remote add k8s https://github.com/helm/charts
+          git fetch k8s master
+          ct lint --config .ct.yaml
 workflows:
   version: 2
   lint:
     jobs:
-      - lint-scripts
-      - lint-charts
+    - lint-scripts
+    - lint-charts
