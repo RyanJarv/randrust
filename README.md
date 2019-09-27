@@ -1,4 +1,5 @@
 # randrust
+[![Build Status](https://travis-ci.org/RyanJarv/randrust.svg?branch=master)](https://travis-ci.org/RyanJarv/randrust)
 
 #### Table of Contents
 
