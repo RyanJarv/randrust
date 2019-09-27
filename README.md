@@ -1,87 +1,189 @@
 # randrust
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
-
 #### Table of Contents
 
 1. [Description](#description)
-2. [Setup - The basics of getting started with randrust](#setup)
-    * [What randrust affects](#what-randrust-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with randrust](#beginning-with-randrust)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Limitations - OS compatibility, etc.](#limitations)
+2. [Usage - Configuration options and additional functionality](#usage)
+    * [Kubernetes with Helm](#kubernetes-with-helm)
+    * [From Package](#from-package)
+    * [Puppet](#puppet)
+    * [Docker Compose](#docker-compose)
+    * [DockerHub](#dockerhub)
+3. [Nagios Check](#nagios-check)
+4. [Limitations - Or why you shouldn't use in prod](#limitations)
 5. [Development - Guide for contributing to the module](#development)
+5. [Contributors/References](#contributors/references)
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
-
-This should be a fairly short description helps the user decide if your module is what they want.
-
-## Setup
-
-### What randrust affects **OPTIONAL**
-
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
-
-If there's more that they should know about, though, this is the place to mention:
-
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
-
-### Beginning with randrust
-
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+A rust web app that returns a random base64 encoded string of a given length.
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
+### Kubernetes with Helm
 
-## Reference
+This assumes you have a kubernetes cluster setup with helm installed.
 
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
+On OSx you can use the Edge install of [docker-for-mac](https://docs.docker.com/v17.12/docker-for-mac/install/#download-docker-for-mac) to setup Kubernetes by enabling it under the running Docker Icon -> Preferences -> Kubernetes.
 
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
+For setting up helm on Kubernetes see the [helm install guide](https://helm.sh/docs/using_helm/#installing-helm).
 
-For each element (class, defined type, function, and so on), list:
+After this is setup you can deploy by cloning this repo and running the deploy script.
+```
+git clone https://github.com/RyanJarv/randrust.git
+cd randrust
+ ./scripts/helm_deploy.sh
+ ```
 
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
+This uses [Let's Encrypt](https://letsencrypt.org/docs/client-options/) for setting up SSL but without changes like using a valid domain name it will generate a self signed cert.
 
-For example:
+### From Package
+* Ubuntu 18.04
+* Ubuntu 16.04
+* Debian 9
 
 ```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
+curl -s https://packagecloud.io/install/repositories/jarv/test/script.deb.sh | sudo bash
+apt install randrust
 ```
+
+This listens on the port configured in /etc/default/randrust. By default it is `31531`.
+
+### Puppet
+
+Puppet supports the same systems as the package install.
+
+See the [puppet-randrust](https://github.com/RyanJarv/puppet-randrust) repo for more info.
+
+### From source locally
+
+```
+# Install rust
+curl https://sh.rustup.rs -sSf | sh
+
+# Clone and build
+git clone https://github.com/RyanJarv/randrust.git
+cd randrust
+./scripts/build.sh
+
+# Run and test
+./target/release/randrust 3413 &
+curl localhost:3413/key/5
+```
+
+### Docker Compose
+
+This uses nginx as a frontend with a self signed SSL cert.
+
+See the [reference docs](https://docs.docker.com/compose/install/) for installing Docker Compose.
+
+```
+git clone https://github.com/RyanJarv/randrust.git
+cd randrust
+docker-compose up
+curl -k https://localhost/key/4
+```
+
+### Dockerhub
+
+```
+docker run -p 127.0.0.1:8080:80 ryanjarv/randrust &
+curl http://localhost:8080/key/5
+```
+
+## Nagios Check
+
+This repo includes the `check_randrust.py` script you can use as a check in nagios.
+
+### Install
+
+Dependencies in `requirements.txt` need to be installed.
+
+```
+python3 -m venv .venv
+. .venv/bin/activate
+./check_randrust.py 
+```
+
+NOTE: Currently there is no option to disable SSL verification, so using it on self signed cert's will not work.
+
+### Usage
+
+```
+usage: check_randrust.py [-h] [-wt RANGE] [-ct RANGE] -u URL [-wl RANGE]
+                         [-cl RANGE] [-v]
+
+Randrust Nagios check.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -wt RANGE, --twarning RANGE
+                        return warning if response time is greater out of
+                        RANGE in seconds
+  -ct RANGE, --tcritical RANGE
+                        return critical if response time is longer out of
+                        RANGE in seconds)
+  -u URL, --url URL     URL to check
+  -wl RANGE, --wlength RANGE
+                        return warning if decoded string length is outside of
+                        RANGE
+  -cl RANGE, --clength RANGE
+                        return critical if decoded string length is outside of
+                        RANGE
+  -v, --verbose         increase output verbosity (use up to 3 times)
+```
+
+### Example
+
+```
+./check_randrust.py --url http://localhost:8000/key/4 --twarning .1 --tcritical .2 --clength 4:4
+RANDRUST OK - Decoded returned string length is 4 | length=4;1:;4:4;0 rtime=0.00957179069519043;0.1;0.2;0
+```
+
 
 ## Limitations
 
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
+These should be fixed soon, but until then this should not be used in production.
+
+* Has anxiety, may panic.
+* Unconfigurable bind interface.
+* This is my first coding in Rust... so whatever goes along with that.
 
 ## Development
 
-In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
+### Kubernete's/Helm
 
-## Release Notes/Contributors/Etc. **Optional**
+See [Usage](#Usage) for setup info.
 
-Icon (https://htmlpreview.github.io/?https://github.com/RyanJarv/randrust/blob/master/helm/randrust/icon.svg) created by ibrandify (https://thenounproject.com/ibrandify/) and licensed under CCPL.
+To lint and test deployment's you can use `helm_lint.sh` and `helm_deploy.sh`.
+```
+./scripts/helm_lint.sh
+./scripts/helm_deploy.sh
+```
+
+### Helm CI
+
+At one point this repo was set up with the Circle CI [helm orb](https://circleci.com/orbs/registry/orb/circleci/helm) for testing in AWS EKS, however it takes a long time to run and isn't cheap without some changes. May look into some other options at somepoint here.
+
+I tried a few other way's like [Kubernetes in Docker](https://github.com/kubernetes-sigs/kind.git) but ran into issues with setting up the ingress route (if you end up trying this check out [this post](https://banzaicloud.com/blog/kind-ingress/), had some inconsistent luck there). 
+
+Right now though I just have Travis CI [setup](https://travis-ci.org/RyanJarv/randrust) to lint the scripts and chart's while it's building the rust package.
+
+### Rust/Deb CI
+
+Travis CI [build's](https://travis-ci.org/RyanJarv/randrust) the rust app and debian package with [cargo-deb](https://github.com/mmstick/cargo-deb) and deploy's to [crates.io](https://crates.io/crates/randrust).
+
+Right now there isn't any testing on the Rust app, may change soon though.
+
+## Contributors/References
+
+In cases where other open source packages, repos or work helped with writing the source for this package I list what it is along with the original license.
+
+* [Icon](https://htmlpreview.github.io/?https://github.com/RyanJarv/randrust/blob/master/helm/randrust/icon.svg) used for the helm package was created by ibrandify (https://thenounproject.com/ibrandify/)
+  * [CCPL](https://creativecommons.org/licenses/by/3.0/us/legalcode).
+* Ubuntu's 18.04 [rsyslogd package](https://launchpad.net/ubuntu/bionic/amd64/rsyslog/8.16.0-1ubuntu9) was used as reference for control and init scripts, though some of it is simplified.
+  * [GPL-3](https://git.launchpad.net/ubuntu/+source/rsyslog/tree/COPYING?h=ubuntu/xenial-updates)
+* Helm's scaffolding from the `helm create` command.
+  * [Apache-2](https://github.com/helm/helm/blob/master/LICENSE)
+
+The rest is written by [Ryan Gerstenkorn](https://github.com/RyanJarv) and licensed under [BSD-2](https://opensource.org/licenses/BSD-2-Clause). 

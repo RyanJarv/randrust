@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Hello world Nagios check."""
+"""Randrust Nagios check."""
 
 import nagiosplugin
 import base64
