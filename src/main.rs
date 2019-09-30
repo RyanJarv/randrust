@@ -3,13 +3,16 @@ extern crate futures;
 
 mod service;
 
-use std::env;
+use std;
 use std::net::{IpAddr, Ipv4Addr, SocketAddr};
 
 use service::serve;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() != 2 {
+        help()
+    }
 
     let addr = IpAddr::V4(<Ipv4Addr>::new(0, 0, 0, 0));
     let port = args[1].parse();
@@ -23,7 +26,7 @@ fn main() {
 }
 
 fn help() -> ! {
-    let args: Vec<String> = env::args().collect();
+    let args: Vec<String> = std::env::args().collect();
     eprintln!("Usage: {} <listen port>", args[0]);
     std::process::exit(1);
 }
