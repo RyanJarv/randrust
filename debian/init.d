@@ -25,15 +25,11 @@ PIDFILE=/run/randrust.pid
 
 SCRIPTNAME=/etc/init.d/$NAME
 
-
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0
 
 # Read configuration variable file if it is present
 [ -r /etc/default/$NAME ] && . /etc/default/$NAME
-
-# Set default options
-RANDRUST_OPTIONS="${RANDRUST_OPTIONS:-$LISTEN_PORT $BIND_ADDRESS}"
 
 # Define LSB log_* functions.
 . /lib/lsb/init-functions
@@ -44,7 +40,7 @@ do_start()
 	#   0 if daemon has been started
 	#   1 if daemon was already running
 	#   other if daemon could not be started or a failure occured
-	start-stop-daemon --start --background --chuid randrust --group randrust --quiet --pidfile $PIDFILE --exec $DAEMON -- $RANDRUST_OPTIONS
+	start-stop-daemon --start --background --chuid randrust --group randrust --quiet --make-pidfile --pidfile $PIDFILE --exec $DAEMON -- $LISTEN_PORT $INTERFACE
 }
 
 do_stop()
@@ -53,7 +49,7 @@ do_stop()
 	#   0 if daemon has been stopped
 	#   1 if daemon was already stopped
 	#   other if daemon could not be stopped or a failure occurred
-	start-stop-daemon --stop --chuid randrust --group randrust --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --exec $DAEMON
+	start-stop-daemon --stop --chuid randrust --group randrust --quiet --retry=TERM/30/KILL/5 --remove-pidfile --pidfile $PIDFILE --exec $DAEMON
 }
 
 case "$1" in
