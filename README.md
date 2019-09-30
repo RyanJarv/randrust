@@ -85,6 +85,8 @@ docker-compose up
 curl -k https://localhost/key/4
 ```
 
+NOTE: This uses the hardcoded self signed test key at ssl/test.* currently. This should be updated if it's used for anything but testing.
+
 ### Dockerhub
 
 ```
