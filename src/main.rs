@@ -25,7 +25,7 @@ fn main() {
             }
         }
     } else {
-        addr = IpAddr::V4(<Ipv4Addr>::new(0, 0, 0, 0));
+        addr = IpAddr::V4(<Ipv4Addr>::new(127, 0, 0, 1));
     }
 
     let port = args[1].parse();
