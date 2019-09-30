@@ -148,6 +148,7 @@ RANDRUST OK - Decoded returned string length is 4 | length=4;1:;4:4;0 rtime=0.00
 
 These should be fixed soon, but until then this should not be used in production.
 
+* Docker Compose uses a hardcoded test key currently. This should be updated if used for anything but testing.
 * Has anxiety, may panic.
 * Unconfigurable bind interface.
 * This is my first coding in Rust... so whatever goes along with that.
