@@ -11,8 +11,7 @@
     * [Docker Compose](#docker-compose)
     * [DockerHub](#dockerhub)
 3. [Nagios Check](#nagios-check)
-4. [Limitations - Or why you shouldn't use in prod](#limitations)
-5. [Development - Guide for contributing to the module](#development)
+4. [Development - Guide for contributing to the module](#development)
 5. [Contributors/References](#contributors/references)
 
 ## Description
@@ -143,16 +142,6 @@ optional arguments:
 ./check_randrust.py --url http://localhost:8000/key/4 --twarning .1 --tcritical .2 --clength 4:4
 RANDRUST OK - Decoded returned string length is 4 | length=4;1:;4:4;0 rtime=0.00957179069519043;0.1;0.2;0
 ```
-
-
-## Limitations
-
-These should be fixed soon, but until then this should not be used in production.
-
-* Docker Compose uses a hardcoded test key currently. This should be updated if used for anything but testing.
-* Has anxiety, may panic.
-* Unconfigurable bind interface.
-* This is my first coding in Rust... so whatever goes along with that.
 
 ## Development
 

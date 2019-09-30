@@ -33,7 +33,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 [ -r /etc/default/$NAME ] && . /etc/default/$NAME
 
 # Set default options
-RANDRUST_OPTIONS="${RANDRUST_OPTIONS:-$LISTEN_PORT}"
+RANDRUST_OPTIONS="${RANDRUST_OPTIONS:-$LISTEN_PORT $BIND_ADDRESS}"
 
 # Define LSB log_* functions.
 . /lib/lsb/init-functions
