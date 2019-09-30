@@ -81,11 +81,12 @@ See the [reference docs](https://docs.docker.com/compose/install/) for installin
 ```
 git clone https://github.com/RyanJarv/randrust.git
 cd randrust
+bash ./scripts/generate_test_certs.sh
 docker-compose up
 curl -k https://localhost/key/4
 ```
 
-NOTE: This uses the hardcoded self signed test key at ssl/test.* currently. This should be updated if it's used for anything but testing.
+NOTE: This uses a self signed test key at ssl/test. This should be updated if it's used for anything but testing.
 
 ### Dockerhub
 
