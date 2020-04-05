@@ -1,3 +1,5 @@
+This was an interview related thing that I spent far too much time on, I do not actively use it anywhere so don't be fooled by the nice looking docs and pretty green passing build icon. It may work well as an example for operationalizing a simple service though. For the puppet repo that goes along side this see https://github.com/RyanJarv/puppet-randrust.
+
 # randrust
 [![Build Status](https://travis-ci.org/RyanJarv/randrust.svg?branch=master)](https://travis-ci.org/RyanJarv/randrust)
 
